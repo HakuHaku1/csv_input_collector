@@ -43,17 +43,16 @@ def event_process():
     get_lastname = last_name.get().lower()
     get_age = age.get().lower()
     df = pandas.DataFrame([[int(data_validation), get_firstname, get_lastname, int(get_age)]], columns= ["ID", "first_name", "last_name", "age"])
-
-    if len(data_validation) == 9 and data_validation.isdigit():
+    pd =pandas.read_csv("csv_file.csv")
+    if len(data_validation) == 9 and data_validation.isdigit() and  get_age.isdigit() and (data_validation) not in pd["ID"].values and not data_validation in pd["ID"].astype(str).values:
 
         df.to_csv("csv_file.csv", mode= "a", index= False, header= not os.path.exists("csv_file.csv"))
         csv_complete.config(text= "processes complete!", fg= "blue")
-    elif not get_age.isdigit():
-        print("invalid input") 
-        csv_complete.config(text= "invalid csv", fg= "red")      
 
     else:
         csv_complete.config(text= "invalid csv", fg= "red")
+    
+    
 
 button = Button(text= "please click to process", font=("georgia", 12), bg= "red", fg= "white", command= event_process)
 button.pack(side= "bottom")
